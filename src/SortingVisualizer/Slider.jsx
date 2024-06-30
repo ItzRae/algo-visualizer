@@ -8,14 +8,6 @@ export const Slider = ({
     value,
     handleChange,
     isDisabled = false,
-
-}: {
-    min?: number;
-    max?: number;
-    step?: number;
-    value: number;
-    handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
-    isDisabled?: boolean;
 }) => {
     return (
         <div className="flex gap-2 items-center justify-center">
@@ -31,6 +23,6 @@ export const Slider = ({
                 className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-700"
             />
             <span className="text-center text-gray-300">Fast</span>
-        </div>    
+        </div>
     );
 };
