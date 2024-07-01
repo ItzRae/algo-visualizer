@@ -12,7 +12,35 @@
     margin: 0 1px;
 } */
 
+.default-bar-color {
+    background-color: #667eea;
+}
 
+.change-bar-color {
+    background-color: red;
+}
+
+.complete-bar-color {
+    background-color: mediumseagreen;
+}
+
+.sorted-bar-color {
+    background-color: #2bb378;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.pulse-animation {
+    animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
 
 html, body{
     height: 100vh;
