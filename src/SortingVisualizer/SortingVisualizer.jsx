@@ -1,11 +1,16 @@
 import "./SortingVisualizer.css";
 import React from "react";
 import Select from "./Select";
-import { FaPlayCircle } from "react-icons/fa";
-import { GrPowerReset } from "react-icons/gr";
 import { Slider } from "./Slider";
+import Sidebar, { SidebarItem } from "../components/Sidebar";
+import { FaPlayCircle, FaCodepen } from "react-icons/fa";
+import { GrPowerReset } from "react-icons/gr";
+import { SiStreamrunners } from "react-icons/si";
+import { IoInformationCircleOutline } from "react-icons/io5";
 import { AnimationArrayType } from "../lib/propTypes";
 import { generateBubbleSortAnimationArray } from "../algos/bubbleSort";
+
+
 
 
 export const MIN_ANIMATION_SPEED = 10
@@ -49,6 +54,7 @@ export default class SortingVisualizer extends React.Component {
             animationSpeed: MIN_ANIMATION_SPEED,
             animations: [],
             selectedAlgorithm: algoOptions[0].value,
+            selectedAlgorithmName: algoOptions[0].label
         };
 
 
@@ -152,11 +158,19 @@ export default class SortingVisualizer extends React.Component {
     
 
     handleSelectChange = (event) => {
-        this.setState({ selectedAlgorithm: event.target.value });
+        const selectedAlgorithm = event.target.value;
+        const selectedAlgorithmName = algoOptions.find(
+            (option) => option.value === selectedAlgorithm
+        ).label;
+
+        this.setState({
+            selectedAlgorithm,
+            selectedAlgorithmName,
+        });
     }
 
     render () {
-        const { array, isSorting, isAnimationComplete, selectedAlgorithm } = this.state; // destructuring the array from the state
+        const { array, isSorting, isAnimationComplete, selectedAlgorithm, selectedAlgorithmName } = this.state; // destructuring the array from the state
         const requiresReset = isAnimationComplete || isSorting;
 
         const handlePlay= () => {
@@ -169,8 +183,18 @@ export default class SortingVisualizer extends React.Component {
 
         }
         return ( 
-            <main className="absolute top-0 h-screen w-screen bg-[#000000] bg-[size:40px_40px]">
-                <div className="flex h-full justify-center">
+            <main className="absolute top-0 h-screen w-screen bg-slate-900 bg-[size:40px_40px]">
+                <div className="flex h-full">
+                {/* Sidebar */}
+                <Sidebar selectedAlgorithmName={selectedAlgorithmName}>
+                    <SidebarItem icon={< IoInformationCircleOutline size={25} className=""/>} text=" About" active={true}/>
+                    <SidebarItem icon={<SiStreamrunners size={20} className=""/>} text="Runtime" active={false} />
+                    <SidebarItem icon={<FaCodepen size={20} className=""/>} text="Pseudocode" active={false}/>
+                </Sidebar>
+                {/* <div className="sidebar bg-gray-800 text-white w-1/5 p-4">
+
+                    </div> */}
+                <div className="flex h-full justify-center w-full">
                     <div 
                         id="content-container"
                         className="flex max-w-[1020px] w-full flex-col lg:px-0 px-4 bg-red"
@@ -186,7 +210,7 @@ export default class SortingVisualizer extends React.Component {
                                     }>Generate New Array</button>
                                 </div>
                                 <Slider 
-                                    isDisabled={false}
+                                    isDisabled={isSorting}
                                     handleChange={(e) => this.setState({ animationSpeed: e.target.value })}
                                     ></Slider>
                                 <Select 
@@ -220,6 +244,7 @@ export default class SortingVisualizer extends React.Component {
                         
                     </div>                    
                 </div>    
+                </div>
             </main> 
         );
     }
