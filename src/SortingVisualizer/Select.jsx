@@ -19,7 +19,7 @@ function Select( { options, selectedAlgorithm, handleSelectChange } ) {
             <select
                 onChange={handleSelectChange}
                 value={selectedAlgorithm}
-                className="block appearance-none h-8 w-full default-bar-color border-indigo border px-4 py-1 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline text-gray-300"
+                className="block appearance-none h-8 w-full default-bar-color border-indigo border px-4 py-1 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline text-gray-100"
             >
                 {options.map((option) => (
                     <option key={option.value} value={option.value}>

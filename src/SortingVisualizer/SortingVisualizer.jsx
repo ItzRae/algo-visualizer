@@ -9,29 +9,28 @@ import { SiStreamrunners } from "react-icons/si";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { AnimationArrayType } from "../lib/propTypes";
 import { generateBubbleSortAnimationArray } from "../algos/bubbleSort";
+import { generateSelectionSortAnimationArray } from "../algos/selectionSort.jsx";
+import { generateMergeSortAnimationArray } from "../algos/mergeSort.jsx";
+import { algoOptions, MIN_ANIMATION_SPEED } from "../lib/utils";
 
 
 
 
-export const MIN_ANIMATION_SPEED = 10
-export const MAX_ANIMATION_SPEED = 400
-
-const algoOptions = [
-    { label: "Bubble Sort", value: "bubble" },
-    { label: "Selection Sort", value: "selection" },
-    { label: "Insertion Sort", value: "insertion" },
-    { label: "Merge Sort", value: "merge" },
-    { label: "Quick Sort", value: "quick" },  
-]
 
 function generateAnimationArray( selectedAlgorithm, isSorting, array, runAnimation) {
+    
     console.log(selectedAlgorithm);
     switch (selectedAlgorithm) {
+        case "selection":
+            generateSelectionSortAnimationArray(isSorting, array, runAnimation);
+            break;
+        case "bubble":
+            generateBubbleSortAnimationArray(isSorting, array, runAnimation);
+            break;
         case "merge":
-            // mergeSortAnimation
+            generateMergeSortAnimationArray(isSorting, array, runAnimation);
             break;
         default:
-            generateBubbleSortAnimationArray(isSorting, array, runAnimation);
             break;
     }
 }
@@ -54,23 +53,25 @@ export default class SortingVisualizer extends React.Component {
             animationSpeed: MIN_ANIMATION_SPEED,
             animations: [],
             selectedAlgorithm: algoOptions[0].value,
-            selectedAlgorithmName: algoOptions[0].label
+            selectedAlgorithmName: algoOptions[0].label,
         };
-
-
     }
+
 
 
     componentDidMount() { //  method is called after the component loads 
         this.resetArray();
+ 
     }
 
-    
+    setActiveTab = (tab) => {
+        this.setState({ isActiveTab: tab });
+    }
 
     resetArray() {
         const array = [];
         const containerHeight = window.innerHeight;
-        const maxBarHeight = Math.max(containerHeight - 100, 100);
+        const maxBarHeight = Math.max(containerHeight - 200, 100);
         for (let i = 0; i < 100; i++) {
             array.push(randomIntFromInterval(5, maxBarHeight));
         }
@@ -178,18 +179,20 @@ export default class SortingVisualizer extends React.Component {
                 this.resetArray();
                 return;
             }
+    
+
             console.log(selectedAlgorithm, isSorting, array, this.runAnimation);
             generateAnimationArray( selectedAlgorithm, isSorting, array, this.runAnimation);
 
         }
         return ( 
-            <main className="absolute top-0 h-screen w-screen bg-slate-900 bg-[size:40px_40px]">
+            <main className="absolute top-0 h-screen w-screen bg-slate-200 bg-[size:40px_40px]">
                 <div className="flex h-full">
                 {/* Sidebar */}
-                <Sidebar selectedAlgorithmName={selectedAlgorithmName}>
-                    <SidebarItem icon={< IoInformationCircleOutline size={25} className=""/>} text=" About" active={true}/>
-                    <SidebarItem icon={<SiStreamrunners size={20} className=""/>} text="Runtime" active={false} />
-                    <SidebarItem icon={<FaCodepen size={20} className=""/>} text="Pseudocode" active={false}/>
+                <Sidebar selectedAlgorithm = { selectedAlgorithm } selectedAlgorithmName={selectedAlgorithmName}>
+                    <SidebarItem icon={< IoInformationCircleOutline size={32} className=""/>} text="About"/>
+                    <SidebarItem icon={<SiStreamrunners size={22} className=""/>} text="Runtime"/>
+                    <SidebarItem icon={<FaCodepen size={22} className=""/>} text="Pseudocode"/>
                 </Sidebar>
                 {/* <div className="sidebar bg-gray-800 text-white w-1/5 p-4">
 
@@ -199,12 +202,12 @@ export default class SortingVisualizer extends React.Component {
                         id="content-container"
                         className="flex max-w-[1020px] w-full flex-col lg:px-0 px-4 bg-red"
                     >
-                        <div className="text-gray-300 h-[66px] relative flex items-center justify-between">
+                        <div className="text-gray-900 h-[66px] relative flex items-center justify-between">
                             <h1 className="me-12 text-2xl font-semibold hidden md:flex">
                                 Sorting Algorithm Visualizer
                             </h1>
                             <div className="flex items-center justify-center gap-4">
-                                <div className="relative overflow-hidden rounded-md border border-neutral-200 bg-transparent px-3 hover:bg-slate-700">
+                                <div className="relative overflow-hidden rounded-md border border-neutral-500 bg-transparent px-3 hover:bg-slate-300">
                                     <button onClick={() => 
                                     this.resetArray()
                                     }>Generate New Array</button>
