@@ -4,14 +4,16 @@ import profile from "./profile.png";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { useState, useContext } from "react";
 import { sortingAlgoData } from "../lib/utils";
+import Modal from "./Modal.jsx";
 
 
 const SidebarContext = createContext();
 
 
-export default function Sidebar({ selectedAlgorithm, selectedAlgorithmName, children }) {
+export default function Sidebar({ selectedAlgorithm, selectedAlgorithmName, children}) {
     const [expanded, setExpanded] = useState(false);
     const [activeTab, setActiveTab] = useState("About"); // Add state to manage active tab
+    const [showModal, setShowModal] = useState(false);
 
     return ( 
         <>
@@ -44,11 +46,15 @@ export default function Sidebar({ selectedAlgorithm, selectedAlgorithmName, chil
                                 </p>
 
                             )}
-                            { sortingAlgoData[selectedAlgorithm] && activeTab === "Pseudocode" ? sortingAlgoData[selectedAlgorithm].pseudocode : null }
+                            {/* {sortingAlgoData[selectedAlgorithm] && activeTab === "Pseudocode" && <StickyBox>This paragraph will be displayed if showElement is true.</p>} */}
+            
+                                { sortingAlgoData[selectedAlgorithm] && activeTab === "Pseudocode" ? 
+                            
+                                showModal && <Modal selectedAlgorithm={selectedAlgorithm} onClose={() => setShowModal(false)}/>: null }
                         </div>
                     </div>
                     {/* SIDEBAR TABS*/}
-                    <SidebarContext.Provider value={{expanded, activeTab, setActiveTab, setExpanded }}>
+                    <SidebarContext.Provider value={{expanded, activeTab, setActiveTab, setExpanded, setShowModal}}>
                         <ul className="flex-1 px-3">{children}</ul>
                     </SidebarContext.Provider>
                 </div>
@@ -69,12 +75,12 @@ export default function Sidebar({ selectedAlgorithm, selectedAlgorithmName, chil
     )
 }
 
-export function SidebarItem( { icon, text }) {
-    const {expanded, activeTab, setActiveTab, setExpanded} = useContext(SidebarContext);
+export function SidebarItem( { icon, text, modal}) {
+    const {expanded, activeTab, setActiveTab, setExpanded, setShowModal} = useContext(SidebarContext);
     const isActive = activeTab === text;
     
     return (
-        <div className={`${expanded? "justify-end flex": ""}`} onClick={() => {setActiveTab(text); setExpanded(true)}}>
+        <div className={`${expanded? "justify-end flex": ""}`} onClick={() => {setActiveTab(text); setExpanded(true); setShowModal(modal)}}>
             <li className={`relative flex items-center w-14 h-14 justify-center py-1.5 px-3 my-2 font-small rounded-md cursor-pointer transition-colors group ${isActive && expanded ?
             "bg-gradient-to-tr from-sky-950 to-sky-750 text-gray-300" : "text-slate-200 hover:bg-sky-900"}`}>
                 {icon}

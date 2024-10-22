@@ -196,9 +196,9 @@ export default class SortingVisualizer extends React.Component {
                 <div className="flex h-full">
                 {/* Sidebar */}
                 <Sidebar selectedAlgorithm = { selectedAlgorithm } selectedAlgorithmName={selectedAlgorithmName}>
-                    <SidebarItem icon={< IoInformationCircleOutline size={32} className=""/>} text="About"/>
-                    <SidebarItem icon={<SiStreamrunners size={22} className=""/>} text="Runtime"/>
-                    <SidebarItem icon={<FaCodepen size={22} className=""/>} text="Pseudocode"/>
+                    <SidebarItem icon={< IoInformationCircleOutline size={32} className=""/>} text="About" modal={false}/>
+                    <SidebarItem icon={<SiStreamrunners size={22} className=""/>} text="Runtime" modal = {false}/>
+                    <SidebarItem icon={<FaCodepen size={22} className=""/>} text="Pseudocode" modal={true}/>
                 </Sidebar>
                 {/* <div className="sidebar bg-gray-800 text-white w-1/5 p-4">
 

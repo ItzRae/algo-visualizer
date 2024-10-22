@@ -11,6 +11,18 @@ export const algoOptions = [
     { label: "Quick Sort", value: "quick" },  
 ]
 
+const quickSortPseudocode = `
+            partition(array, low, high):
+                pivot = array[high]
+                i = low - 1
+                for j = low to high - 1:
+                    if array[j] < pivot:
+                        i++
+                        swap array[i] with array[j]
+                swap array[i + 1] with array[high]
+                return i + 1
+        `
+
 export const sortingAlgoData = {
     bubble: {
         name: "Bubble Sort",
@@ -50,7 +62,7 @@ export const sortingAlgoData = {
         worstCase: "O(n^2)",
         averageCase: "O(n log n)",
         bestCase: "O(n log n)",
-        pseudocode: "quick blah"
+        pseudocode: quickSortPseudocode
     }
     
 }
