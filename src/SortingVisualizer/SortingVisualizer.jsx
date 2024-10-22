@@ -11,9 +11,9 @@ import { AnimationArrayType } from "../lib/propTypes";
 import { generateBubbleSortAnimationArray } from "../algos/bubbleSort";
 import { generateSelectionSortAnimationArray } from "../algos/selectionSort.jsx";
 import { generateMergeSortAnimationArray } from "../algos/mergeSort.jsx";
+import { generateQuickSortAnimationArray } from "../algos/quickSort.jsx";
+import { generateInsertionSortAnimationArray } from "../algos/insertionSort.jsx";
 import { algoOptions, MIN_ANIMATION_SPEED } from "../lib/utils";
-
-
 
 
 
@@ -29,6 +29,12 @@ function generateAnimationArray( selectedAlgorithm, isSorting, array, runAnimati
             break;
         case "merge":
             generateMergeSortAnimationArray(isSorting, array, runAnimation);
+            break;
+        case "quick":
+            generateQuickSortAnimationArray(isSorting, array, runAnimation);
+            break;
+        case "insertion":
+            generateInsertionSortAnimationArray(isSorting, array, runAnimation);
             break;
         default:
             break;
